@@ -47,7 +47,7 @@ jobs:
           -o sonar_metrics.json
 
       - name: Upload SonarCloud report as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v6
         with:
           name: sonar_metrics
           path: sonar_metrics.json
