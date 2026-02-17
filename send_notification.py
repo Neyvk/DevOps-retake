@@ -11,23 +11,24 @@ source_branch = os.environ.get("PR_SOURCE_BRANCH")
 target_branch = os.environ.get("PR_TARGET_BRANCH")
 merge_url = os.environ.get("PR_URL")
 release_tag = os.environ.get("RELEASE_TAG")
+sonar_url = "https://sonarcloud.io/project/overview?id=Neyvk_DevOps-retake"
 
 bot = telebot.TeleBot(bot_token)
 
 merge_time = datetime.now()
 
 message = f"""
-<b>Новый Merge выполнен!</b>
+<b>Новый Merge выполнен</b>
 <b>Репозиторий:</b> <a href="https://github.com/{repo}">{repo}</a>
-<b>Замержена ветка:</b>
+<b>Учавствовашие ветки:</b>
 <code>{source_branch}</code> ➜ <code>{target_branch}</code>
 
-<b>PR:</b> {pr_title}
-<b>Дата мержа:</b> {merge_time}
-<b>Ссылка на merge:</b>
-<a href="{merge_url}">Открыть Pull Request</a>
+<b>Pull request:</b> {pr_title}
+<b>Дата:</b> {merge_time}
+<a href="{merge_url}">ссылка на merge</a>
 
 🏷 <b>Текущий Release:</b><code>{release_tag}</code>
+<a href="{sonar_url}">ссылка на sonarQube</a>
 """
 
 bot.send_message(chat_id, message, parse_mode="HTML")
