@@ -21,8 +21,7 @@ def computer_guess(ndice):
     return random.randint(ndice, 6*ndice)
 
 def player_guess(ndice):
-    return input('Guess the sum of the no of eyes '\ 
-                 'in the next throw: ')
+    return input('Guess the sum of the no of eyes in the next throw: ')
 
 def play_one_round(ndice, capital, guess_function):
     guess = guess_function(ndice)
