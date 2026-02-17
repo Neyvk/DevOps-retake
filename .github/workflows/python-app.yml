@@ -1,6 +1,7 @@
 name: PipeLine
 
 on:
+  workflow_dispatch:
   pull_request:
     types: [closed]
     branches:
@@ -29,17 +30,18 @@ jobs:
           pip install flake8 pytest
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@v6
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@v2
+        with:
+          organization: neykv
+          token: ${{ secrets.SONAR_TOKEN }}
 
-      - name: Download SonarCloud Metrics
+      - name: Download SonarCloud
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           curl -u $SONAR_TOKEN: \
-          "https://sonarcloud.io/api/measures/component?component=Neyvk_retake_Pipeline&metricKeys=bugs,vulnerabilities,code_smells,coverage,duplicated_lines_density" \
+          "https://sonarcloud.io/api/measures/component?component=Neyvk_DevOps-retake&metricKeys=bugs,vulnerabilities,code_smells,coverage,duplicated_lines_density" \
           -o sonar_metrics.json
 
 
