@@ -39,18 +39,26 @@ jobs:
           SONAR_BRANCH: dev
 
       - name: Wait for SonarCloud Analysis
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          TASK_ID=$(curl -s -u $SONAR_TOKEN: "https://sonarcloud.io/api/project_analyses/search?project=Neyvk_DevOps-retake&branch=dev" \
-            | jq -r '.analyses[0].key')
-
+          TASK_ID="${{ steps.sonar.outputs.ceTaskId }}"
           echo "Waiting for analysis $TASK_ID to complete..."
+
           STATUS=$(curl -s -u $SONAR_TOKEN: "https://sonarcloud.io/api/ce/task?id=$TASK_ID" | jq -r '.task.status')
-          while [ "$STATUS" != "SUCCESS" ]; do
+          while [ "$STATUS" != "SUCCESS" ] && [ "$STATUS" != "FAILED" ]; do
             echo "Analysis not finished yet, waiting 10s..."
             sleep 10
             STATUS=$(curl -s -u $SONAR_TOKEN: "https://sonarcloud.io/api/ce/task?id=$TASK_ID" | jq -r '.task.status')
           done
-          echo "Analysis completed!"
+
+          if [ "$STATUS" == "FAILED" ]; then
+            echo "SonarCloud analysis failed!"
+            exit 1
+          fi
+
+          echo "Analysis completed successfully!"
+
 
       - name: Download SonarCloud report
         env:
