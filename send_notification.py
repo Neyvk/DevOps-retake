@@ -27,8 +27,7 @@ message = f"""
 <b>Ссылка на merge:</b>
 <a href="{merge_url}">Открыть Pull Request</a>
 
-🏷 <b>Текущий Release:</b>
-<code>{release_tag}</code>
+🏷 <b>Текущий Release:</b><code>{release_tag}</code>
 """
 
 bot.send_message(chat_id, message, parse_mode="HTML")
