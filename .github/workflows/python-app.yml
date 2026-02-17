@@ -37,6 +37,7 @@ jobs:
           SONAR_HOST_URL: https://sonarcloud.io
           SONAR_PROJECT_KEY: Neyvk_DevOps-retake
           SONAR_ORGANIZATION: neyvk
+          SONAR_BRANCH: dev
 
       - name: Download SonarCloud
         env:
