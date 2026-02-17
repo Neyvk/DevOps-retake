@@ -46,6 +46,11 @@ jobs:
           "https://sonarcloud.io/api/measures/component?component=Neyvk_DevOps-retake&metricKeys=bugs,vulnerabilities,code_smells,coverage,duplicated_lines_density" \
           -o sonar_metrics.json
 
+      - name: Upload SonarCloud report as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: sonar_metrics
+          path: sonar_metrics.json
 
       - name: Send Telegram notification
         run: python send_notification.py
